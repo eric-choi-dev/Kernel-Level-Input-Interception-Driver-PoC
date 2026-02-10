@@ -1,0 +1,37 @@
+*******************************************************************************
+* *
+* Bugcheck Analysis                                    *
+* *
+*******************************************************************************
+
+DPC_WATCHDOG_VIOLATION (133)
+The DPC watchdog detected a prolonged run time at an IRQL of DISPATCH_LEVEL
+or above.
+Arguments:
+Arg1: 0000000000000001, The system cumulatively spent an extended period of time at
+    DISPATCH_LEVEL or above.
+Arg2: 0000000000001e00, The watchdog period (in ticks).
+Arg3: fffff8014a971358, Cast to DPC_WATCHDOG_GLOBAL_TRIAGE_BLOCK.
+Arg4: 0000000000000000
+
+Debugging Details:
+------------------
+
+KEY_VALUES_STRING: 1
+    Key  : Analysis.Cpu.Sec
+    Value: 4
+
+    Key  : Analysis.DebugAnalysisManager
+    Value: Create
+
+STACK_TEXT:
+fffff801`4a982188 fffff801`4921e2e9 : 00000000`00000133 00000000`00000001 00000000`00001e00 fffff801`4a971358 : nt!KeBugCheckEx
+fffff801`4a982190 fffff801`4921e850 : 00001f80`00230232 fffff801`49043180 00000000`00000000 00000000`00000000 : nt!KeAccumulateTicks+0x17c099
+...
+(CustomDriver.sys + 0x1450) <--- Driver implementation issue detected here (Infinite loop in IOCTL handler)
+
+CAUSE:
+The user-mode input injection thread entered an infinite loop while holding a spinlock, causing the DPC Watchdog to timeout.
+
+RESOLUTION:
+Implemented a user-mode watchdog timer (DriftMonitor) to yield execution and prevent continuous high-IRQL operations.
