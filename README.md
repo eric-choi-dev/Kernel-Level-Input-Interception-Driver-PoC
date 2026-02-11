@@ -12,6 +12,7 @@ The primary goal of this research was to bypass user-mode hooks (used by standar
 
 ## Architecture
 (Please refer to `docs/architecture_diagram.png` for visual representation)
+<img width="885" height="920" alt="architecture_diagram" src="https://github.com/user-attachments/assets/25c8bbef-452b-40c7-a7da-cde903a038c2" />
 
 1.  **Driver Initialization:** The application establishes a context with the Interception driver.
 2.  **Device Filtering:** Filters Hardware IDs to identify specific keyboards/mice.
