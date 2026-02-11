@@ -11,7 +11,6 @@ The primary goal of this research was to bypass user-mode hooks (used by standar
 * **Latency Simulation:** Integrated a randomization engine to simulate human-like input latency (50ms - 150ms), testing the driver's responsiveness under varied load conditions.
 
 ## Architecture
-(Please refer to `docs/architecture_diagram.png` for visual representation)
 <img width="885" height="920" alt="architecture_diagram" src="https://github.com/user-attachments/assets/25c8bbef-452b-40c7-a7da-cde903a038c2" />
 
 1.  **Driver Initialization:** The application establishes a context with the Interception driver.
